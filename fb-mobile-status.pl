@@ -1,5 +1,10 @@
 #!/usr/bin/env perl
 
+# NOTE
+#
+# In the mobile site, status-like things can be nested, e.g,, when someone
+# comments on another status or multiple people/pages share the same story
+
 use strict;
 no warnings;# "recursion";
 use WWW::Mechanize;

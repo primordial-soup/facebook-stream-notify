@@ -47,11 +47,19 @@ my $tree = HTML::TreeBuilder->new_from_content( $index );
 
 my @elements = $tree->look_down( _tag => 'div', id => qr/^u_/ );
 
+my @post_data;
 for my $post (@elements) {
-	my $text = $formatter->format( $post );
-	$text =~ s/\n+/ /gms;
-	print "$text\n";
+  #use DDP; p $post->as_XML_indented;
+  my @children = $post->content_list;
+
+  push @post_data, [ map { trim( $_->format($formatter) ) } @children ];
+
+    #poster => trim($divs[0]->format($formatter)),
+	#my $text = $formatter->format( $post );
+	#$text =~ s/\n+/ /gms;
+	#print "$text\n";
 }
+use DDP; p @post_data;
 
 
 sub get_index {
@@ -75,4 +83,7 @@ sub get_index {
 }
 
 
+sub trim {
+  $_[0] =~ s/(^\s+)|(\s+$)//gr;
+}
 
